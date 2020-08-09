@@ -1,0 +1,179 @@
+controllers:
+   # - name: 'dwa'
+   #   type: 'dwa_local_planner/DWAPlannerROS'
+   # - name: 'eband'
+   #   type: 'eband_local_planner/EBandPlannerROS'
+   - name: 'teb_planner'
+     type: 'teb_local_planner/TebLocalPlannerROS'
+teb_planner:
+  holonomic_robot: false
+  controller_frequency: 1
+  controller_patience: 10
+  controller_max_retries: 3
+  
+  # TEB planner params
+  odom_topic: 'odom'
+  map_frame: 'map' 
+  
+  # Trajectory
+  teb_autosize: true
+  dt_ref: 0.3
+  dt_hysteresis: 0.1
+  min_samples: 3
+  max_samples: 500
+  global_plan_overwrite_orientation: true
+  allow_init_with_backwards_motion: false       #Make it true in case of multi lidar
+  global_plan_viapoint_sep: -0.1 #-1
+  via_points_ordered: false
+  max_global_plan_lookahead_dist: 3.0 #1.5 was tested on random world
+  exact_arc_length: false
+  force_reinit_new_goal_dist: 1
+  feasibility_check_no_poses: 25
+  publish_feedback: false
+
+  # Robot 
+  max_vel_x: 0.75
+  max_vel_x_backwards: 0.75
+  max_vel_y: 0.0        #This is strafing velocity and should be zero for non holonomic robots
+  max_vel_theta: 1.0
+  acc_lim_x: 0.75
+  acc_lim_y: 0.0
+  acc_lim_theta: 1.5
+  min_turning_radius: 0 # 0
+  wheelbase: 1.0
+  cmd_angle_instead_rotvel: false # false
+  is_footprint_dynamic: false
+  
+  footprint_model/type: 'circular'
+  footprint_model/radius: 0.70
+  
+  # GoalTolerance
+  xy_goal_tolerance: 0.10
+  yaw_goal_tolerance: 0.10
+  free_goal_vel: false
+  
+  # Obstacles
+  min_obstacle_dist: 0.2
+  inflation_dist: 0.40
+  dynamic_obstacle_inflation_dist: 0.2
+  include_dynamic_obstacles: true # true
+  include_costmap_obstacles: true
+  costmap_behind_robot_dist: 0.5 # 1.5
+  obstacle_poses_affected: 25
+  legacy_obstacle_association: false
+  obstacle_association_force_inclusion_factor: 1.5
+  obstacle_association_cutoff_factor: 5
+  costmap_converter_plugin: "costmap_converter::CostmapToPolygonsDBSMCCH"   
+  #"" costmap_converter::CostmapToLinesDBSMCCH costmap_converter::CostmapToPolygonsDBSMCCH
+  costmap_converter_spin_thread: true
+  costmap_converter_rate: 5
+  
+  # Optimization
+  no_inner_iterations: 5
+  no_outer_iterations: 4
+  optimization_activate: true
+  optimization_verbose: false
+  penalty_epsilon: 0.1
+  weight_max_vel_x: 2 #1
+  weight_max_vel_y: 2
+  weight_max_vel_theta: 1
+  weight_acc_lim_x: 1
+  weight_acc_lim_y: 1
+  weight_acc_lim_theta: 1
+  weight_kinematics_nh: 1000 # 1000
+  weight_kinematics_forward_drive: 100 # for differential drive
+  weight_kinematics_turning_radius: 1
+  weight_optimaltime: 1
+  weight_obstacle: 50 #50
+  weight_inflation: 0.1 #0.1
+  weight_dynamic_obstacle: 50
+  weight_dynamic_obstacle_inflation: 0.1
+  weight_viapoint: 1
+  weight_prefer_rotdir: 50
+  weight_adapt_factor: 2.0
+  
+  # Distance to follower
+  # min_follower_dist: 1.5
+  # max_follower_dist: 2.0
+  #!! Optimization params for follower
+  # weight_follower_pose_x: 0
+  # weight_follower_pose_y: 0
+  weight_follower_vel_x: 2
+  weight_follower_vel_theta: 0.1
+  weight_proxemics: 1
+  enable_guide: false                                                                                                          
+  
+  # Homotopy Class Planner
+  enable_homotopy_class_planning: false # true
+  enable_multithreading: true
+  simple_exploration: false
+  max_number_classes: 5 
+  selection_cost_hysteresis: 1.0
+  selection_prefer_initial_plan: 0.95 #0.95
+  selection_obst_cost_scale: 100.0
+  selection_viapoint_cost_scale: 1.0
+  selection_alternative_time_cost: false
+  obstacle_keypoint_offset: 0.1
+  obstacle_heading_threshold: 0.45 
+  roadmap_graph_no_samples: 15
+  roadmap_graph_area_width: 5 # [m]
+  roadmap_graph_area_length_scale: 1.0
+  h_signature_prescaler: 1
+  h_signature_threshold: 0.1
+  
+  viapoints_all_candidates: true
+  
+  visualize_hc_graph: true
+  visualize_with_time_as_z_axis_scale: 0.0
+  # Recovery
+  shrink_horizon_backup: true
+  shrink_horizon_min_duration: 10
+  oscillation_recovery: false
+  oscillation_v_eps: 0.1
+  oscillation_omega_eps: 0.1
+  oscillation_recovery_min_duration: 10
+  oscillation_filter_duration: 10
+
+
+
+# eband:
+#   Ctrl_Rate: 20.0
+#   bubble_velocity_multiplier: 2.0
+#   costmap_weight: 10.0
+#   differential_drive: true
+#   disallow_hysteresis: false
+#   eband_equilibrium_approx_max_recursion_depth: 3
+#   eband_equilibrium_relative_overshoot: 0.75
+#   eband_external_force_gain: 3.0
+#   eband_internal_force_gain: 2.0
+#   eband_min_relative_overlap: 0.7
+#   eband_significant_force_lower_bound: 0.15
+#   eband_tiny_bubble_distance: 0.01
+#   eband_tiny_bubble_expansion: 0.01
+#   in_place_trans_vel: 0.0
+#   k_damp: 3.5
+#   k_prop: 4.0
+#   marker_lifetime: 0.5
+#   max_acceleration: 0.2
+#   max_rotational_acceleration: 0.3
+#   max_translational_acceleration: 0.4
+#   # Lower values for testing with the actual robot.
+#   max_vel_lin: 1.45 #0.5 #1.45
+#   max_vel_th: 2.0 #0.5 #2.0
+#   min_in_place_vel_th: 0.05
+#   min_vel_lin: 0.0
+#   min_vel_th: 0.0
+#   num_iterations_eband_optimization: 4
+#   rot_stopped_vel: 0.01
+#   rotation_correction_threshold: 0.5
+#   rotation_threshold_multiplier: 1.0
+#   trans_stopped_vel: 0.01
+#   virtual_mass: 100.0
+#   xy_goal_tolerance: 0.2
+#   yaw_goal_tolerance: 0.2
+
+# dwa:
+#   path_distance_bias: 75.0
+#   goal_distance_bias: 48.0
+
+

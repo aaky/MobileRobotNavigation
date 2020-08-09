@@ -1,0 +1,35 @@
+global_frame: map
+robot_base_frame: base_link
+obstacle_range: 5.0
+raytrace_range: 30.0
+#footprint: [[-x, -y], [-x, y], [x, y], [x, -y]]   x = Robot_length / 2 , y = Robot_width / 2
+footprint: [[-0.60, -0.63],[-0.60, 0.63],[0.60, 0.63],[0.60, -0.63]]
+robot_radius: 0.70
+subscribe_to_updates: true
+
+
+static_layer:
+  enabled: true
+  map_topic: /map
+  subscribe_to_updates: true
+
+3d_obstacle_layer:
+  enabled: true
+  #observation_sources: laser_scan_sensor 
+  observation_sources: 3d_camera
+  #laser_scan_sensor: {sensor_frame: hokuyo, data_type: LaserScan, topic: /mybot/laser/scan, marking: true, clearing: true}
+  3d_camera: {sensor_frame: rgbd_camera_optical_frame, data_type: PointCloud2, topic: /rgbd_camera/depth/points, marking: true, clearing: true, obstacle_range: 10.0, raytrace_range: 10.0, min_obstacle_height: 0.00, max_obstacle_height: 4.00, observation_persistence: 0.0, expected_update_rate: 1}
+  max_obstacle_height: 5.0
+  z_resolution: 0.1
+  z_voxels: 50                          # (max_obstacle_height / z_resolution)
+  origin z: 0.0
+  publish_voxel_map: true
+  mark_threshold: 3
+
+  obstacle_range: 10.0
+  raytrace_range: 12.0
+
+inflation_layer:
+  enabled: true
+  inflation_radius: 0.30
+  cost scaling factor: 10.0

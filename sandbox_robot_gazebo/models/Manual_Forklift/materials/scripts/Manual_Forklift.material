@@ -1,0 +1,15 @@
+material Manual_Forklift/Diffuse
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture Manual_Forklift.png
+        filtering anistropic
+        max_anisotropy 16
+      }
+    }
+  }
+}

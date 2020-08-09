@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="Manual_Forklift">
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Manual_Forklift/meshes/Manual_Forklift.dae</uri>
+          </mesh>
+        </geometry>
+        <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+<!--             <contact>
+              <ode/>
+            </contact> -->
+          </surface>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Manual_Forklift/meshes/Manual_Forklift.dae</uri>
+          </mesh>
+        </geometry>
+<!--         <material>
+          <script>
+            <uri>model://Manual_Forklift/materials/scripts</uri>
+            <uri>model://Manual_Forklift/materials/textures</uri>
+            <name>Manual_Forklift/Diffuse</name>
+          </script>
+        </material> -->
+      </visual>
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <inertial>
+        <inertia>
+          <ixx>1</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1</iyy>
+          <iyz>0</iyz>
+          <izz>1</izz>
+        </inertia>
+        <mass>1</mass>
+      </inertial>
+      <kinematic>0</kinematic>
+      <gravity>1</gravity>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,54 @@
+<launch>
+  <arg name="amcl" default="true" />
+  <arg name="mapserver" default="true" />
+  <arg name="gmapping" default="true" />
+  <arg name="rviz" default="true" />
+  <arg name="smach" default="true" />
+
+  <!-- Map Server -->
+  <include if="$(arg mapserver)" file="$(find sandbox_robot_navigation)/launch/map_server.launch" />
+
+  <!-- Run AMCL -->
+  <include if="$(arg amcl)" file="$(find sandbox_robot_navigation)/launch/amcl.launch" />
+
+  <!-- Gmapping while recording map only -->
+  <!-- <include if="$(arg gmapping)" file="$(find sandbox_robot_navigation)/launch/gmapping.launch" /> -->
+
+  <!-- Robot transforms -->
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.15 0 0.1 0 0 0  /base_link /hokuyo 100"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_wheel" args="0 0.15 0 0 0 0  /base_link /left_wheel 100"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_wheel" args="0 -0.15 0 0 0 0  /base_link /right_wheel  100"/> 
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera" args="0.2 0 0 0 0 0  /base_link /camera  100"/> 
+
+  <!-- Move Base Flex -->
+  <!-- add launch-prefix="gdb -ex run - -args" (double dash before args, XML doesn't allow this in comments..) for enable gdb-->
+  <node pkg="mbf_costmap_nav" type="mbf_costmap_nav" respawn="false" name="move_base_flex" output="screen">
+    <param name="tf_timeout" value="1.5"/>
+    <param name="planner_max_retries" value="3"/>
+    <rosparam file="$(find sandbox_robot_navigation)/config/planners.yaml" command="load" />
+    <!-- <rosparam file="$(find sandbox_robot_navigation)/config/mprim.yaml" command="load" /> -->
+    <rosparam file="$(find sandbox_robot_navigation)/config/controllers.yaml" command="load" />
+    <rosparam file="$(find sandbox_robot_navigation)/config/recovery_behaviors.yaml" command="load" />
+    <rosparam file="$(find sandbox_robot_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find sandbox_robot_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find sandbox_robot_navigation)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find sandbox_robot_navigation)/config/local_costmap_params.yaml" command="load" />
+
+    <remap from="cmd_vel" to="cmd_vel"/>
+    <remap from="odom" to="odom"/>
+    <remap from="scan" to="mybot/laser/scan"/>
+    <param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="1.0"/>
+    <param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="1.0"/>
+  </node>
+  
+  <!-- SMACH Navigation State Machine -->
+  <node if="$(arg smach)" pkg="sandbox_robot_navigation" type="mbf_state_machine.py" name="mbf_state_machine" output="screen"/> 
+  <!-- <node pkg="sandbox_robot_navigation" type="mbf_move_base_action.py" name="mbf_move_base_action" output="screen"/> -->
+
+  <!-- RViz with config -->
+  <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz" args="-d $(find sandbox_robot_navigation)/rviz/move_base_flex.rviz" />
+
+</launch>

@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="Pallet_Truck">
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Pallet_Truck/meshes/Pallet_Truck.dae</uri>
+          </mesh>
+        </geometry>
+        <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+<!--             <contact>
+              <ode/>
+            </contact> -->
+          </surface>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Pallet_Truck/meshes/Pallet_Truck.dae</uri>
+          </mesh>
+        </geometry>
+<!--         <material>
+          <script>
+            <uri>model://Pallet_Truck/materials/scripts</uri>
+            <uri>model://Pallet_Truck/materials/textures</uri>
+            <name>Pallet_Truck/Diffuse</name>
+          </script>
+        </material> -->
+      </visual>
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <inertial>
+        <inertia>
+          <ixx>1</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1</iyy>
+          <iyz>0</iyz>
+          <izz>1</izz>
+        </inertia>
+        <mass>1</mass>
+      </inertial>
+      <kinematic>0</kinematic>
+      <gravity>1</gravity>
+    </link>
+  </model>
+</sdf>

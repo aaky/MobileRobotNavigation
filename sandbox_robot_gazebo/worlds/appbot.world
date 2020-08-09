@@ -1,0 +1,506 @@
+<sdf version='1.6'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='Warehouse_Large'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Warehouse_Large/meshes/Warehouse_Large.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Warehouse_Large/meshes/Warehouse_Large.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://Warehouse_Large/materials/scripts</uri>
+              <uri>model://Warehouse_Large/materials/textures</uri>
+              <name>Warehouse_Large/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <inertial>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>-1.11591 -0.350445 0 0 -0 0</pose>
+    </model>
+    <model name='Ramp'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Ramp/meshes/Ramp.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Ramp/meshes/Ramp.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <inertial>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>-9.78122 5.77573 0 0 -0 0</pose>
+    </model>
+    <model name='Pallet_tank'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Pallet_tank/meshes/Pallet_tank.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Pallet_tank/meshes/Pallet_tank.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <inertial>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>-6.08048 7.52964 0 0 -0 0</pose>
+    </model>
+    <model name='Ladder'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Ladder/meshes/Ladder.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Ladder/meshes/Ladder.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <inertial>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>-0.78351 -0.197843 0 0 -0 0</pose>
+    </model>
+    <model name='Pallet_Truck'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Pallet_Truck/meshes/Pallet_Truck.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Pallet_Truck/meshes/Pallet_Truck.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <inertial>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>1.54428 -1.05298 0 0 -0 0</pose>
+    </model>
+    <model name='Manual_Forklift'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Manual_Forklift/meshes/Manual_Forklift.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://Manual_Forklift/meshes/Manual_Forklift.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <inertial>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>0.578252 -4.91218 0 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>200 521000000</sim_time>
+      <real_time>418 151086154</real_time>
+      <wall_time>1542484322 32727340</wall_time>
+      <iterations>200521</iterations>
+      <model name='Ladder'>
+        <pose frame=''>-0.784741 -0.196294 0.124687 0.000104 7e-06 4.1e-05</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-0.784741 -0.196294 0.124687 0.000104 7e-06 4.1e-05</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.955616 -0.006613 16.7336 0.053038 1.38078 0</acceleration>
+          <wrench>0.955616 -0.006613 16.7336 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Manual_Forklift'>
+        <pose frame=''>0.57825 -4.91217 -0.061284 8.9e-05 2.4e-05 -0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0.57825 -4.91217 -0.061284 8.9e-05 2.4e-05 -0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.140944 0.588846 -0.749741 0.184151 0.842424 -3.14154</acceleration>
+          <wrench>-0.140944 0.588846 -0.749741 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Pallet_Truck'>
+        <pose frame=''>1.54429 -1.05298 0.002449 -0.000886 0.002328 -0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>1.54429 -1.05298 0.002449 -0.000886 0.002328 -0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.014864 0.005299 -0.690496 -2.16095 -0.219566 -1e-06</acceleration>
+          <wrench>0.014864 0.005299 -0.690496 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Pallet_tank'>
+        <pose frame=''>-6.65041 7.88506 0.532869 4e-06 -2e-06 0.001593</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-6.65041 7.88506 0.532869 4e-06 -2e-06 0.001593</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>1.25617 -1.83885 -3.57491 0.306673 0.781894 3.13948</acceleration>
+          <wrench>1.25617 -1.83885 -3.57491 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Ramp'>
+        <pose frame=''>-9.73363 3.88835 0.44451 8.8e-05 -3e-06 0.001538</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-9.73363 3.88835 0.44451 8.8e-05 -3e-06 0.001538</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Warehouse_Large'>
+        <pose frame=''>-1.11591 -0.350449 -5.6e-05 -1.1e-05 1e-06 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-1.11591 -0.350449 -5.6e-05 -1.1e-05 1e-06 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-3.4e-05 1.7e-05 8.21003 1.02334 -0.720969 3.14154</acceleration>
+          <wrench>-3.4e-05 1.7e-05 8.21003 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>-0.045072 -0.73932 36.3858 -0.084068 1.56877 -0.08435</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>

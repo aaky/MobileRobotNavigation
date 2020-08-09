@@ -1,0 +1,38 @@
+<launch>
+  <group ns="rtabmap">
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start"> 
+          <param name="frame_id" type="string" value="base_link"/>
+
+          <param name="subscribe_depth" type="bool" value="true"/>
+
+          <remap from="odom" to="/odom"/>
+
+          <remap from="rgb/image" to="/rgbd_camera/rgb/image_raw"/>
+          <remap from="depth/image" to="/rgbd_camera/depth/image_raw"/>
+          <remap from="rgb/camera_info" to="/rgbd_camera/rgb/camera_info"/>
+
+          <param name="queue_size" type="int" value="10"/>
+
+          <!-- RTAB-Map's parameters -->
+          <param name="RGBD/AngularUpdate" type="string" value="0.01"/>
+          <param name="RGBD/LinearUpdate" type="string" value="0.01"/>
+          <param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
+    </node>
+  </group>
+
+
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find sandbox_robot_description)/urdf/warehouse_robot_with_3d_camera.xacro'"/>
+
+  <!-- send fake joint values -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="False"/>
+  </node>
+
+  <!-- Combine joint values -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+  <!-- Show in Rviz   -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find sandbox_robot_description)/rviz/mapping.rviz"/>
+  <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find mybot_description)/launch/myrobot.rviz"/-->
+
+</launch>

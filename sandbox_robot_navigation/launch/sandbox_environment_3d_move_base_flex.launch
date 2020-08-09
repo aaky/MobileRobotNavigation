@@ -1,0 +1,87 @@
+<launch>
+  <arg name="rviz" default="true" />
+  <arg name="smach" default="true" />
+  <param name="/use_sim_time" value="true"/>
+
+  <!-- slightly increase default parameters for larger images (qhd=720p) -->
+   <arg name="gftt_block_size" default="5" /> 
+   <arg name="gftt_min_distance" default="5" /> 
+
+  <group ns="rtabmap">
+  
+    <!-- Odometry -->
+    <!-- <node pkg="rtabmap_ros" type="rgbd_odometry" name="visual_odometry" output="screen">
+        <remap from="rgb/image" to="/rgbd_camera/rgb/image_raw"/>
+        <remap from="depth/image" to="/rgbd_camera/depth/image_raw"/>
+        <remap from="rgb/camera_info" to="/rgbd_camera/rgb/camera_info"/>
+
+        <remap from="odom" to="/odom"/>
+
+        <param name="frame_id" type="string" value="base_link"/>
+        <param name="approx_sync" type="bool" value="false"/>
+    
+        <param name="GFTT/BlockSize" type="string" value="$(arg gftt_block_size)"/>
+        <param name="GFTT/MinDistance" type="string" value="$(arg gftt_min_distance)"/>
+    </node> -->
+
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="">
+        <param name="frame_id" type="string" value="base_link"/>
+
+        <param name="subscribe_depth" type="bool" value="true"/>
+
+        <remap from="grid_map" to="/map"/>
+        <remap from="odom" to="/odom"/>
+
+        <remap from="rgb/image" to="/rgbd_camera/rgb/image_raw"/>
+        <remap from="depth/image" to="/rgbd_camera/depth/image_raw"/>
+        <remap from="rgb/camera_info" to="/rgbd_camera/rgb/camera_info"/>
+
+        <param name="queue_size" type="int" value="10"/>
+
+        <!-- RTAB-Map's parameters -->
+        <param name="RGBD/AngularUpdate" type="string" value="0.01"/>
+        <param name="RGBD/LinearUpdate" type="string" value="0.01"/>
+        <param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
+
+        <!-- LOCALIZATION MODE -->
+        <param name="Mem/IncrementalMemory" type="string" value="false"/>
+    </node>
+  </group>
+
+  <!-- Move Base Flex -->
+  <!-- add launch-prefix="gdb -ex run - -args" (double dash before args, XML doesn't allow this in comments..) for enable gdb-->
+  <node pkg="mbf_costmap_nav" type="mbf_costmap_nav" respawn="true" name="move_base_flex" output="screen">
+    <param name="tf_timeout" value="1.5"/>
+    <param name="planner_max_retries" value="3"/>
+    <rosparam file="$(find sandbox_robot_navigation)/config/global_planners.yaml" command="load" />
+    <rosparam file="$(find sandbox_robot_navigation)/config/local_planners.yaml" command="load" />
+    <rosparam file="$(find sandbox_robot_navigation)/config/recovery_behaviors.yaml" command="load" />
+    <rosparam file="$(find sandbox_robot_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find sandbox_robot_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find sandbox_robot_navigation)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find sandbox_robot_navigation)/config/local_costmap_params.yaml" command="load" />
+
+    <remap from="cmd_vel" to="cmd_vel"/>
+    <remap from="odom" to="odom"/>
+    <!-- <remap from="scan" to="/rgbd_camera/depth/scan"/>
+     <remap from="map" to="/rtabmap/grid_map"/> 
+     <param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="1.0"/>
+    <param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="1.0"/> -->
+  </node>
+
+
+  <!-- send fake joint values -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="False"/>
+  </node>
+
+  <!-- Combine joint values -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  
+  <!-- SMACH Navigation State Machine -->
+  <node if="$(arg smach)" pkg="sandbox_robot_navigation" type="mbf_state_machine.py" name="mbf_state_machine" output="screen"/> 
+
+  <!-- RViz with config -->
+  <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz" args="-d $(find sandbox_robot_navigation)/rviz/move_base_flex.rviz" />
+
+</launch>

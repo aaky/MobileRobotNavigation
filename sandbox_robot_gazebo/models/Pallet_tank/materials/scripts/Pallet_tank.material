@@ -1,0 +1,15 @@
+material Pallet_tank/Diffuse
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture Pallet_tank.png
+        filtering anistropic
+        max_anisotropy 16
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>sandbox_robot</name>
+  <version>0.0.1</version>
+  <description>
+       Sandbox package consisting of autonomous navigation robot for warehouse applications which will be initially tested on Gazebo platform and later on will be scaled on multiple robots working simultaneously using move base flex with SMACH for handling complex navigation recovery cases
+  </description>
+
+  <maintainer email="akash.patil92@gmail.com">Akash Patil</maintainer>
+  <license>BSD</license>
+  <url type="website">http://wiki.ros.org/move_base_flex</url>
+  <author email="spuetz@uos.de">Sebastian Pütz</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>mbf_abstract_core</exec_depend>
+  <exec_depend>mbf_abstract_nav</exec_depend>
+  <exec_depend>mbf_costmap_core</exec_depend>
+  <exec_depend>mbf_costmap_nav</exec_depend>
+  <exec_depend>mbf_msgs</exec_depend>
+  <exec_depend>mbf_simple_nav</exec_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>
